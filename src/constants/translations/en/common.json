@@ -1,0 +1,35 @@
+{
+  "hello": "Hello",
+  "ui": {
+    "press": "Press",
+    "button": "Button",
+    "text": "Text",
+    "form": "Form",
+    "lang": "Language"
+  },
+  "button": {
+    "default": "Default Button",
+    "outline": "Outline Button"
+  },
+  "demo-screens": {
+    "list": {
+      "header": "List of example screens"
+    },
+    "text": {
+      "short": "An example of using the Text.tsx components.",
+      "header": "Text demo"
+    },
+    "button": {
+      "short": "An example of using the Button.tsx components.",
+      "header": "Buttons demo"
+    },
+    "form": {
+      "short": "An example of using the Form.tsx components.",
+      "header": "Form demo"
+    },
+    "lang": {
+      "short": "An example of internationalization and language changing",
+      "header": "Internationalization demo"
+    }
+  }
+}

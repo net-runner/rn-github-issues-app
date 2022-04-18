@@ -1,0 +1,35 @@
+{
+  "hello": "Witaj",
+  "ui": {
+    "press": "Naciśnij",
+    "button": "Przycisk",
+    "text": "Tekst",
+    "form": "Formularz",
+    "lang": "Języki"
+  },
+  "button": {
+    "default": "Podstawowy przycisk",
+    "outline": "Przycisk zarysowany"
+  },
+  "demo-screens": {
+    "list": {
+      "header": "Lista przykładowych ekranów"
+    },
+    "text": {
+      "short": "Przykład korzystania z komponentu Text.tsx.",
+      "header": "Przykład różnych tekstów"
+    },
+    "button": {
+      "short": "Przykład korzystania z komponentu Button.tsx.",
+      "header": "Przykłady przycisków"
+    },
+    "form": {
+      "short": "Przykład korzystania z komponentu Form.tsx.",
+      "header": "Przykładowy formularz"
+    },
+    "lang": {
+      "short": "Przykład internacjonalizacji i zmiany języka",
+      "header": "Przykład internacjonalizacji"
+    }
+  }
+}
