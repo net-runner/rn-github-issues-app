@@ -10,6 +10,7 @@ import { Appearance } from 'react-native';
 import { ThemeProvider } from 'styled-components/native';
 import { Main } from './navigation/Main';
 import './constants/translations';
+import { IssuesProvider } from './hooks/issues/IssuesProvider';
 
 if (__DEV__) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -27,12 +28,13 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" animated />
-
-      <NavigationContainer theme={currentTheme} ref={navigationRef}>
-        <ThemeProvider theme={currentTheme}>
-          <Main />
-        </ThemeProvider>
-      </NavigationContainer>
+      <IssuesProvider>
+        <NavigationContainer theme={currentTheme} ref={navigationRef}>
+          <ThemeProvider theme={currentTheme}>
+            <Main />
+          </ThemeProvider>
+        </NavigationContainer>
+      </IssuesProvider>
     </>
   );
 }
