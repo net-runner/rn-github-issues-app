@@ -1,11 +1,12 @@
 import { View, Text } from 'react-native';
 import React from 'react';
+import { Page } from '../components/Page';
 
 const RepoList = () => {
   return (
-    <View>
+    <Page>
       <Text>RepoList</Text>
-    </View>
+    </Page>
   );
 };
 
