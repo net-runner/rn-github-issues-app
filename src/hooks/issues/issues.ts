@@ -1,11 +1,14 @@
 import React, { useEffect, useReducer } from 'react';
 import { issueStorage } from '../../store/issue-storage';
-import { Issue, IssueComment, IssuesAction } from './types';
+import { Issue, IssueComment, IssuesAction, Repo } from './types';
 import uuid from 'react-native-uuid';
 
 export interface IssuesState {
   issues: {
     [key: string]: Issue;
+  };
+  repo: {
+    [key: string]: Repo;
   };
   initialized: boolean;
   error: string | undefined;

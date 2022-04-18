@@ -1,5 +1,9 @@
 React Native Recruitment Task for [Startup Developement House](https://start-up.house/en)
 
+## Task
+
+![Img](https://github.com/net-runner/rn-startup-dev/blob/main/task.PNG)
+
 ## Usage
 
 > Be sure to have the [Expo CLI](https://docs.expo.io/workflow/expo-cli/) installed.

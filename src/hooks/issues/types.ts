@@ -10,7 +10,12 @@ export interface Issue {
     [key: string]: IssueComment;
   };
 }
-
+export interface Repo {
+  created_at: string;
+  updated_at: string;
+  stargazers_count: number;
+  watchers_count: number;
+}
 export interface IssueComment {
   id: string;
   created_at: string;

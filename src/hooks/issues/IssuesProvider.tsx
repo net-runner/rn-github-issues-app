@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Issue, IssuesAction } from '../../hooks/issues/types';
+import { Issue, IssuesAction, Repo } from '../../hooks/issues/types';
 
 import { ActivityIndicator } from 'react-native';
 import { Page } from '../../components/Page';
@@ -8,6 +8,9 @@ import { useIssuesCollection } from './issues';
 type IssueContextType = {
   issues: {
     [key: string]: Issue;
+  };
+  repo: {
+    [key: string]: Repo;
   };
   queryPage: number;
   issuesDispatch: React.Dispatch<IssuesAction>;
@@ -18,10 +21,10 @@ export const IssueContext = React.createContext<IssueContextType | undefined>(
 );
 
 export const IssuesProvider: React.FC = ({ children }) => {
-  const [{ initialized, issues, queryPage }, issuesDispatch] =
+  const [{ initialized, issues, queryPage, repo }, issuesDispatch] =
     useIssuesCollection();
   return (
-    <IssueContext.Provider value={{ issues, issuesDispatch, queryPage }}>
+    <IssueContext.Provider value={{ issues, issuesDispatch, queryPage, repo }}>
       {initialized ? (
         children
       ) : (
