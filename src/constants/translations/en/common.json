@@ -1,6 +1,9 @@
 {
   "hello": "Hello",
   "ui": {
+    "repo-list": "Choose repo.",
+    "issues": "Issues",
+    "issues-details": "Issue details",
     "press": "Press",
     "button": "Button",
     "text": "Text",

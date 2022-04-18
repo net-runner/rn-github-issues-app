@@ -1,18 +1,16 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
-import { List } from '../screens/List';
-import { FormDemo } from '../screens/FormDemo';
-import TextDemo from '../screens/TextDemo';
-import { ButtonDemo } from '../screens/ButtonsDemo';
-import LangDemo from '../screens/LangDemo';
+import RepoList from '../screens/RepoList';
+import IssueListScreen from '../screens/IssueListScreen';
+import IssueDetails from '../screens/IssueDetails';
 
 export type MainStackParams = {
-  List: undefined;
-  TextDemo: undefined;
-  FormDemo: undefined;
-  ButtonDemo: undefined;
-  LangDemo: undefined;
+  RepoList: undefined;
+  IssueDetails: {
+    id: string;
+  };
+  IssueList: undefined;
 };
 
 const MainStack = createNativeStackNavigator<MainStackParams>();
@@ -22,29 +20,19 @@ export const Main = () => {
   return (
     <MainStack.Navigator>
       <MainStack.Screen
-        name="List"
-        component={List}
-        options={{ headerTitle: t('demo-screens.list.header') }}
+        name="RepoList"
+        component={RepoList}
+        options={{ headerTitle: t('ui.repo-list') }}
       />
       <MainStack.Screen
-        name="TextDemo"
-        component={TextDemo}
-        options={{ headerTitle: t('demo-screens.form.header') }}
+        name="IssueList"
+        component={IssueListScreen}
+        options={{ headerTitle: t('ui.issues') }}
       />
       <MainStack.Screen
-        name="FormDemo"
-        component={FormDemo}
-        options={{ headerTitle: t('demo-screens.form.header') }}
-      />
-      <MainStack.Screen
-        name="ButtonDemo"
-        component={ButtonDemo}
-        options={{ headerTitle: t('demo-screens.button.header') }}
-      />
-      <MainStack.Screen
-        name="LangDemo"
-        component={LangDemo}
-        options={{ headerTitle: t('demo-screens.lang.header') }}
+        name="IssueDetails"
+        component={IssueDetails}
+        options={{ headerTitle: t('ui.issues-details') }}
       />
     </MainStack.Navigator>
   );
