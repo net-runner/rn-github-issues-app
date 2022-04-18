@@ -1,3 +1,1 @@
-React Native Recruitment Task for Startup Developement House [link](https://start-up.house/en)
-
-For task des. see (./task.png)
+React Native Recruitment Task for [Startup Developement House](https://start-up.house/en)
