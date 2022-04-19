@@ -21,7 +21,6 @@ const RepoList = () => {
   const repoList = useMemo(() => (repos ? Object.values(repos) : []), [repos]);
   const handleRequest = useCallback(
     (repo_text: string) => {
-      console.log(repoList.length);
       getRepo(repo_text).then(repo => {
         if (repos[repo.id]) {
           setRepoError('same');

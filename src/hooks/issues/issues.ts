@@ -14,9 +14,13 @@ export interface IssuesState {
   error: string | undefined;
   query: string;
   queryPage: number;
+  currentRepo: string;
 }
 
-const issuesReducer = (state: IssuesState, action: any): IssuesState => {
+const issuesReducer = (
+  state: IssuesState,
+  action: IssuesAction,
+): IssuesState => {
   switch (action.type) {
     case 'fetch':
       let newIssues: IssuesState['issues'] = {};
@@ -49,6 +53,28 @@ const issuesReducer = (state: IssuesState, action: any): IssuesState => {
         },
       };
 
+    case 'repo-set-navigate':
+      let navigateIssues = {};
+      if (state.currentRepo !== '') {
+        issueStorage.set(
+          `${state.currentRepo}-issues`,
+          JSON.stringify(state.issues),
+        );
+      }
+      if (issueStorage.contains(`${action.payload.id}-issues`)) {
+        let storedIssues: IssuesState['issues'] = JSON.parse(
+          issueStorage.getString(`${action.payload.id}-issues`)!,
+        );
+
+        navigateIssues = { ...storedIssues };
+      }
+      return {
+        ...state,
+        issues: navigateIssues,
+        currentRepo: action.payload.id,
+        queryPage: Math.floor(Object.values(navigateIssues).length / 20),
+      };
+
     case 'repo-add':
       return {
         ...state,
@@ -65,8 +91,8 @@ const issuesReducer = (state: IssuesState, action: any): IssuesState => {
         repos: repoes,
       };
     case 'add-comment':
-      let newComment = action.payload.comment;
-      newComment.id = uuid.v4();
+      let newComment = action.payload.comment as IssueComment;
+      newComment.id = uuid.v4().toString();
       newComment.created_at = new Date().toDateString();
       issue = state.issues[action.payload.id];
       issue.comments = issue.comments + 1;
@@ -89,7 +115,7 @@ const issuesReducer = (state: IssuesState, action: any): IssuesState => {
       };
 
     case 'error':
-      return { ...state, error: action.payload };
+      return { ...state, error: action.payload.error };
 
     default:
       return state;
@@ -108,21 +134,21 @@ export const useIssuesCollection = (): [
       error: undefined,
       query: '',
       queryPage: 1,
+      currentRepo: '',
       repo: {},
     },
     initial => {
-      const persistantStore = JSON.parse(
+      const persistedStore = JSON.parse(
         issueStorage.getString('issueState') || '{}',
       );
-      return Object.entries(persistantStore).length > 0
-        ? persistantStore
+      return Object.entries(persistedStore).length > 0
+        ? persistedStore
         : initial;
     },
   );
 
   useEffect(() => {
     let unmounted = false;
-
     !unmounted && issueStorage.set('issueState', JSON.stringify(state));
     return () => {
       unmounted = true;

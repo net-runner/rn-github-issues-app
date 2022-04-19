@@ -41,7 +41,12 @@ export interface CommentFetchAction {
     data: IssueComment[];
   };
 }
-
+export interface RepoSetAndNavigateAction {
+  type: 'repo-set-navigate';
+  payload: {
+    id: string;
+  };
+}
 export interface CommentAddAction {
   type: 'add-comment';
   payload: {
@@ -88,6 +93,7 @@ export interface IssueDeleteAction {
 }
 
 export type IssuesAction =
+  | RepoSetAndNavigateAction
   | RepoAddAction
   | RepoDeleteAction
   | IssueFetchAction

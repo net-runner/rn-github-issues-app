@@ -4,12 +4,24 @@ import { Repo } from '../../hooks/issues/types';
 import { Row, RowBetween } from '../Rows';
 import { Feather, AntDesign, FontAwesome } from '@expo/vector-icons';
 import { useIssues } from '../../hooks/issues/IssuesProvider';
+import { useNavigation } from '@react-navigation/native';
+import { MainStackParams } from '../../navigation/Main';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
+type NavigationProps = NativeStackNavigationProp<MainStackParams, 'RepoList'>;
 const RepoItem = ({ repo }: { repo: Repo }) => {
   const { issuesDispatch } = useIssues();
+  const { navigate } = useNavigation<NavigationProps>();
 
   const handleRepoRemove = () => {
     issuesDispatch({ type: 'repo-delete', payload: { id: repo.id } });
+  };
+  const handleNavigate = () => {
+    issuesDispatch({
+      type: 'repo-set-navigate',
+      payload: { id: repo.full_name },
+    });
+    navigate('IssueList');
   };
   return (
     <View
@@ -40,20 +52,23 @@ const RepoItem = ({ repo }: { repo: Repo }) => {
           </TouchableOpacity>
         </Row>
       </RowBetween>
-      <View style={{ padding: 15 }}>
-        <Text style={{ fontSize: 17, fontWeight: 'bold' }}>
-          {repo.full_name}
-        </Text>
-        <Text>{repo.description}</Text>
-        <RowBetween>
-          <View>
-            <Text>{'Created: ' + repo.created_at.split('T')[0]}</Text>
-          </View>
-          <View>
-            <Text>{'Last update: ' + repo.updated_at.split('T')[0]}</Text>
-          </View>
-        </RowBetween>
-      </View>
+      <TouchableOpacity onPress={() => handleNavigate()}>
+        <View style={{ padding: 15 }}>
+          <Text style={{ fontSize: 17, fontWeight: 'bold' }}>
+            {repo.full_name}
+          </Text>
+          <Text>{repo.description}</Text>
+          <RowBetween>
+            <View>
+              <Text>{'Created: ' + repo.created_at.split('T')[0]}</Text>
+            </View>
+            <View>
+              <Text>{'Last update: ' + repo.updated_at.split('T')[0]}</Text>
+            </View>
+          </RowBetween>
+          <Text>{'Open issues: ' + repo.open_issues}</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };

@@ -4,6 +4,13 @@ React Native Recruitment Task for [Startup Developement House](https://start-up.
 
 ![Img](https://github.com/net-runner/rn-startup-dev/blob/main/task.PNG)
 
+## Technology
+
+- expo
+- state created using useReducer, useContext persisted using MMKV
+- partialy styled with styled-components
+- navigated using react-navgation
+
 ## Usage
 
 > Be sure to have the [Expo CLI](https://docs.expo.io/workflow/expo-cli/) installed.

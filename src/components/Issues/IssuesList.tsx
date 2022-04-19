@@ -1,5 +1,5 @@
 import { TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { FlatList } from 'react-native-gesture-handler';
 import IssueItem from './IssueItem';
@@ -10,17 +10,18 @@ import IssueListFooter from './IssueListFooter';
 import { getIssues } from '../../api/issues';
 import SearchBar from '../SearchBar/SearchBar';
 import { useIssues } from '../../hooks/issues/IssuesProvider';
+import { debounce } from 'lodash';
 
 type NavigationProps = NativeStackNavigationProp<MainStackParams, 'IssueList'>;
 
 const IssuesList = () => {
-  const { issues, issuesDispatch, queryPage } = useIssues();
+  const { issues, issuesDispatch, queryPage, currentRepo } = useIssues();
   const [Filter, setFilter] = useState('');
   const { navigate } = useNavigation<NavigationProps>();
   const issueList = useMemo(() => Object.values(issues), [issues]);
 
-  const fetchIssues = useCallback(() => {
-    getIssues(queryPage)
+  const fetchIssues = useCallback((page: number, repo: string) => {
+    getIssues(page, 20, repo)
       .then(issues => {
         issuesDispatch({ type: 'fetch', payload: { data: issues } });
         issuesDispatch({ type: 'queryPageIncrease' });
@@ -28,8 +29,12 @@ const IssuesList = () => {
       .catch(error => {
         issuesDispatch({ type: 'error', payload: { error } });
       });
-  }, [queryPage]);
+  }, []);
 
+  const debouncedFetchIssues = useCallback(
+    debounce((page: number, repo: string) => fetchIssues(page, repo), 2555),
+    [],
+  );
   const handleChange = (val: string) => {
     setFilter(val);
   };
@@ -42,7 +47,10 @@ const IssuesList = () => {
     [Filter, issues],
   );
 
-  if (issueList.length === 0) fetchIssues();
+  useEffect(() => {
+    if (issueList.length === 0) debouncedFetchIssues(queryPage, currentRepo);
+  }, [currentRepo]);
+
   return (
     <>
       <SearchBar
@@ -62,7 +70,7 @@ const IssuesList = () => {
         ListFooterComponent={() => (Filter === '' ? <IssueListFooter /> : null)}
         initialNumToRender={20}
         onEndReached={() => {
-          fetchIssues();
+          debouncedFetchIssues(queryPage, currentRepo);
         }}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => navigate('IssueDetails', item)}>
