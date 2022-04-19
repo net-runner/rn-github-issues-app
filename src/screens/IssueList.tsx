@@ -2,33 +2,40 @@ import { TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { FlatList } from 'react-native-gesture-handler';
-import IssueItem from './IssueItem';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useNavigationState } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { MainStackParams } from '../../navigation/Main';
-import IssueListFooter from './IssueListFooter';
-import { getIssues } from '../../api/issues';
-import SearchBar from '../SearchBar/SearchBar';
-import { useIssues } from '../../hooks/issues/IssuesProvider';
 import { debounce } from 'lodash';
+import { getIssues } from '../api/issues';
+import IssueItem from '../components/Issues/IssueItem';
+import IssueListFooter from '../components/Issues/IssueListFooter';
+import { Page } from '../components/Page';
+import { useIssues } from '../hooks/issues/IssuesProvider';
+import { MainStackParams } from '../navigation/Main';
+import SearchBar from '../components/SearchBar/SearchBar';
 
-type NavigationProps = NativeStackNavigationProp<MainStackParams, 'IssueList'>;
+type IssueListProps = NativeStackNavigationProp<MainStackParams, 'IssueList'>;
 
-const IssuesList = () => {
+const IssuesList = ({ navigation, route }: IssueListProps) => {
   const { issues, issuesDispatch, queryPage, currentRepo } = useIssues();
   const [Filter, setFilter] = useState('');
-  const { navigate } = useNavigation<NavigationProps>();
+  const { navigate } = navigation;
+  const { id, open_issues } = route.params;
+
   const issueList = useMemo(() => Object.values(issues), [issues]);
 
+  const isAllIssuesFetched = issueList.length === open_issues;
+
   const fetchIssues = useCallback((page: number, repo: string) => {
-    getIssues(page, 20, repo)
-      .then(issues => {
-        issuesDispatch({ type: 'fetch', payload: { data: issues } });
-        issuesDispatch({ type: 'queryPageIncrease' });
-      })
-      .catch(error => {
-        issuesDispatch({ type: 'error', payload: { error } });
-      });
+    if (!isAllIssuesFetched) {
+      getIssues(page, 20, repo)
+        .then(issues => {
+          issuesDispatch({ type: 'fetch', payload: { data: issues } });
+          issuesDispatch({ type: 'queryPageIncrease' });
+        })
+        .catch(error => {
+          issuesDispatch({ type: 'error', payload: { error } });
+        });
+    }
   }, []);
 
   const debouncedFetchIssues = useCallback(
@@ -52,7 +59,7 @@ const IssuesList = () => {
   }, [currentRepo]);
 
   return (
-    <>
+    <Page style={{ padding: 0 }}>
       <SearchBar
         placeholder="Search issues..."
         value={Filter}
@@ -63,11 +70,13 @@ const IssuesList = () => {
         data={issuesFiltered}
         removeClippedSubviews
         scrollEventThrottle={16}
-        ItemSeparatorComponent={() => <View style={{ margin: 15 }} />}
+        ItemSeparatorComponent={() => <View style={{ margin: 10 }} />}
         showsVerticalScrollIndicator={false}
         keyExtractor={item => item.id}
         onEndReachedThreshold={0}
-        ListFooterComponent={() => (Filter === '' ? <IssueListFooter /> : null)}
+        ListFooterComponent={() =>
+          Filter === '' && !isAllIssuesFetched ? <IssueListFooter /> : null
+        }
         initialNumToRender={20}
         onEndReached={() => {
           debouncedFetchIssues(queryPage, currentRepo);
@@ -78,7 +87,7 @@ const IssuesList = () => {
           </TouchableOpacity>
         )}
       />
-    </>
+    </Page>
   );
 };
 

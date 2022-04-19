@@ -2,15 +2,18 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useTranslation } from 'react-i18next';
 import RepoList from '../screens/RepoList';
-import IssueListScreen from '../screens/IssueListScreen';
 import IssueDetails from '../screens/IssueDetails';
+import IssueList from '../screens/IssueList';
 
 export type MainStackParams = {
   RepoList: undefined;
   IssueDetails: {
     id: string;
   };
-  IssueList: undefined;
+  IssueList: {
+    id: string;
+    open_issues: number;
+  };
 };
 
 const MainStack = createNativeStackNavigator<MainStackParams>();
@@ -26,7 +29,7 @@ export const Main = () => {
       />
       <MainStack.Screen
         name="IssueList"
-        component={IssueListScreen}
+        component={IssueList}
         options={{ headerTitle: t('ui.issues') }}
       />
       <MainStack.Screen

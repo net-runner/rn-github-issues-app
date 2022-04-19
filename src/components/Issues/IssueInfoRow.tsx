@@ -34,12 +34,14 @@ const IssueInfoRow = ({
       {type === 'created-at' && (
         <>
           <CenteringRow>
-            <AntDesign name="calendar" size={24} color="black" />
-            <Text style={[{ color: 'gray' }]}>{issue.created_at}</Text>
+            <AntDesign name="calendar" size={20} color="gray" />
+            <Text style={[{ color: 'gray' }]}>
+              {issue.created_at.split('T')[0]}
+            </Text>
           </CenteringRow>
           <CenteringRow>
             <Text>{issue.comments.toString()}</Text>
-            <EvilIcons name="comment" size={24} color="black" />
+            <EvilIcons name="comment" size={24} color="gray" />
           </CenteringRow>
         </>
       )}

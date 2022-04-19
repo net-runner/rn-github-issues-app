@@ -21,9 +21,9 @@ const SearchBar = ({ value, setValue, ...rest }: SearchBarInterface) => {
         flexDirection: 'row',
         marginHorizontal: 10,
         paddingHorizontal: 10,
+        marginTop: 10,
         height: 45,
-        borderWidth: 2,
-        borderColor: 'gray',
+        backgroundColor: '#fff',
         borderRadius: 20,
       }}
     >

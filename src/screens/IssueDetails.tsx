@@ -68,6 +68,7 @@ const IssueDetails = ({ route }: IssueDetailsProp) => {
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
       <Page>
         <Text type="header">{issue.title}</Text>
+        <IssueInfoRow type="created-at" issue={issue} />
         <IssueInfoRow style={{ marginBottom: 20 }} issue={issue} />
         <Markdown>{issue.body}</Markdown>
         <IssueCommentSection comment_list={comments} />

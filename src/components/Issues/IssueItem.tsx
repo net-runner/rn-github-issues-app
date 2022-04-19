@@ -9,9 +9,8 @@ const IssueItem = ({ issue }: { issue: Issue }) => {
   return (
     <View
       style={{
-        borderColor: 'gray',
+        backgroundColor: '#fff',
         borderRadius: 5,
-        borderWidth: 2,
         padding: 10,
       }}
     >

@@ -21,7 +21,7 @@ const RepoItem = ({ repo }: { repo: Repo }) => {
       type: 'repo-set-navigate',
       payload: { id: repo.full_name },
     });
-    navigate('IssueList');
+    navigate('IssueList', { id: repo.id, open_issues: repo.open_issues });
   };
   return (
     <View
