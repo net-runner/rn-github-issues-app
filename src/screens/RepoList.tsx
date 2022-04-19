@@ -10,6 +10,7 @@ import { CenterPage } from '../components/CenterPage';
 import RepoFind from '../components/Repos/RepoFind';
 import RepoItemList from '../components/Repos/RepoItemList';
 import { debounce } from 'lodash';
+import { AnimatePresence, MotiView } from 'moti';
 
 const RepoList = () => {
   const { repos, issuesDispatch } = useIssues();
@@ -98,15 +99,26 @@ const RepoList = () => {
             <AntDesign name="plus" size={18} color="white" />
           </Button>
         </RowBetween>
-        {RepoName.length > 4 && <RepoFind repoError={repoError} />}
+        <AnimatePresence>
+          {RepoName.length > 4 && <RepoFind repoError={repoError} />}
+        </AnimatePresence>
+
         <RepoItemList repoList={repoList} />
-        {repoList.length === 0 && (
-          <CenterPage>
-            <View>
-              <Text style={{ fontSize: 25 }}>Your repo list is empty</Text>
-            </View>
-          </CenterPage>
-        )}
+        <AnimatePresence>
+          {repoList.length === 0 && (
+            <CenterPage>
+              <MotiView
+                from={{ opacity: 1 }}
+                animate={{ opacity: 1 }}
+                exit={{
+                  opacity: 0,
+                }}
+              >
+                <Text style={{ fontSize: 25 }}>Your repo list is empty</Text>
+              </MotiView>
+            </CenterPage>
+          )}
+        </AnimatePresence>
       </Page>
     </ScrollView>
   );
