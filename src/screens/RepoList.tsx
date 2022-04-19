@@ -1,28 +1,108 @@
 import { View, Text, ScrollView, TextInput } from 'react-native';
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { Page } from '../components/Page';
 import { Button } from '../components/Button/Button';
-import { RowBetweem } from '../components/Rows';
+import { RowBetween } from '../components/Rows';
+import { getRepo } from '../api/repo';
+import { useIssues } from '../hooks/issues/IssuesProvider';
+import { AntDesign } from '@expo/vector-icons';
+import { CenterPage } from '../components/CenterPage';
+import RepoFind from '../components/Repos/RepoFind';
+import RepoItemList from '../components/Repos/RepoItemList';
+import { debounce } from 'lodash';
 
 const RepoList = () => {
+  const { repos, issuesDispatch } = useIssues();
   const [RepoName, setRepoName] = useState('');
+  const [repoError, setRepoError] = useState<
+    'found' | 'not-found' | 'same' | 'api'
+  >('not-found');
 
+  const repoList = useMemo(() => (repos ? Object.values(repos) : []), [repos]);
+  const handleRequest = (repo_text: string) => {
+    getRepo(repo_text).then(repo => {
+      if (repos[repo.id]) {
+        setRepoError('same');
+      } else {
+        if (repo.message) {
+          repo.message[0] === 'A' || repo.message[0] === 'B'
+            ? setRepoError('api')
+            : setRepoError('not-found');
+        } else {
+          setRepoError('found');
+        }
+      }
+    });
+  };
+  const reqRepo = useCallback(
+    debounce(repo_text => handleRequest(repo_text), 1777),
+    [],
+  );
+  const handleChange = (text: string) => {
+    setRepoName(text);
+    reqRepo(text);
+  };
+
+  const handleAddRepo = () => {
+    if (repoError === 'found') {
+      getRepo(RepoName)
+        .then(repo => {
+          issuesDispatch({ type: 'repo-add', payload: { repo } });
+          setRepoName('');
+        })
+        .catch(error => {
+          setRepoName(error);
+        });
+    }
+  };
   return (
     <ScrollView
       contentContainerStyle={{ flexGrow: 1, backgroundColor: '#e8eaed' }}
     >
       <Page>
-        <RowBetweem
-          style={{ borderWidth: 1, borderRadius: 5, paddingHorizontal: 10 }}
+        <RowBetween
+          style={{
+            borderRadius: 5,
+            paddingHorizontal: 5,
+          }}
         >
           <TextInput
-            style={{ fontSize: 18 }}
+            style={{
+              flex: 1,
+              height: 60,
+              fontSize: 18,
+              paddingHorizontal: 10,
+              borderRadius: 10,
+              backgroundColor: 'white',
+            }}
+            autoCapitalize="none"
             placeholder="eg. facebook/react-native"
+            multiline={false}
             value={RepoName}
-            onChange={e => setRepoName(e.nativeEvent.text)}
+            onChangeText={text => handleChange(text)}
           />
-          <Button onPress={() => null}>Add repo</Button>
-        </RowBetweem>
+          <Button
+            style={{
+              width: 60,
+              height: 60,
+              marginLeft: 20,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+            onPress={() => handleAddRepo()}
+          >
+            <AntDesign name="plus" size={24} color="white" />
+          </Button>
+        </RowBetween>
+        {RepoName.length > 4 && <RepoFind repoError={repoError} />}
+        <RepoItemList repoList={repoList} />
+        {repoList.length === 0 && (
+          <CenterPage>
+            <View>
+              <Text style={{ fontSize: 25 }}>Your repo list is empty</Text>
+            </View>
+          </CenterPage>
+        )}
       </Page>
     </ScrollView>
   );

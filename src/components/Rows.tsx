@@ -10,7 +10,8 @@ export const CenteringRow = styled.View`
 export const Row = styled.View`
   flex-direction: row;
 `;
-export const RowBetweem = styled.View`
+export const RowBetween = styled.View`
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;

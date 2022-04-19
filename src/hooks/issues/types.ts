@@ -11,10 +11,15 @@ export interface Issue {
   };
 }
 export interface Repo {
+  id: string;
   created_at: string;
+  full_name: string;
+  message?: string;
   updated_at: string;
   stargazers_count: number;
+  description: string;
   watchers_count: number;
+  open_issues: number;
 }
 export interface IssueComment {
   id: string;
@@ -59,6 +64,20 @@ export interface IssueErrorAction {
   };
 }
 
+export interface RepoAddAction {
+  type: 'repo-add';
+  payload: {
+    repo: Repo;
+  };
+}
+
+export interface RepoDeleteAction {
+  type: 'repo-delete';
+  payload: {
+    id: string;
+  };
+}
+
 export interface IssueDeleteAction {
   type: 'delete';
   payload: {
@@ -67,6 +86,8 @@ export interface IssueDeleteAction {
 }
 
 export type IssuesAction =
+  | RepoAddAction
+  | RepoDeleteAction
   | IssueFetchAction
   | IssueDeleteAction
   | IssueIncreaseQueryPageAction

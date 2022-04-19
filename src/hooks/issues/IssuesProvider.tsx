@@ -9,7 +9,7 @@ type IssueContextType = {
   issues: {
     [key: string]: Issue;
   };
-  repo: {
+  repos: {
     [key: string]: Repo;
   };
   queryPage: number;
@@ -21,10 +21,10 @@ export const IssueContext = React.createContext<IssueContextType | undefined>(
 );
 
 export const IssuesProvider: React.FC = ({ children }) => {
-  const [{ initialized, issues, queryPage, repo }, issuesDispatch] =
+  const [{ initialized, issues, queryPage, repos }, issuesDispatch] =
     useIssuesCollection();
   return (
-    <IssueContext.Provider value={{ issues, issuesDispatch, queryPage, repo }}>
+    <IssueContext.Provider value={{ issues, issuesDispatch, queryPage, repos }}>
       {initialized ? (
         children
       ) : (

@@ -7,7 +7,7 @@ export interface IssuesState {
   issues: {
     [key: string]: Issue;
   };
-  repo: {
+  repos: {
     [key: string]: Repo;
   };
   initialized: boolean;
@@ -49,6 +49,21 @@ const issuesReducer = (state: IssuesState, action: any): IssuesState => {
         },
       };
 
+    case 'repo-add':
+      return {
+        ...state,
+        repos: {
+          ...state.repos,
+          [action.payload.repo.id]: action.payload.repo,
+        },
+      };
+    case 'repo-delete':
+      let repoes = { ...state.repos };
+      delete repoes[action.payload.id];
+      return {
+        ...state,
+        repos: repoes,
+      };
     case 'add-comment':
       let newComment = action.payload.comment;
       newComment.id = uuid.v4();
@@ -93,6 +108,7 @@ export const useIssuesCollection = (): [
       error: undefined,
       query: '',
       queryPage: 1,
+      repo: {},
     },
     initial => {
       const persistantStore = JSON.parse(

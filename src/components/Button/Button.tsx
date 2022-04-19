@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
 
 type ButtonProps = {
   onPress: () => void;
-  children: string;
+  children: string | number | JSX.Element;
   type?: 'outline';
   style?: ViewStyle;
 };
