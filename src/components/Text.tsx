@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text as RNText, StyleProp, TextStyle } from 'react-native';
+import styled from 'styled-components/native';
 
 import colors from '../constants/colors';
 
@@ -40,3 +41,8 @@ export const Text = ({ type, children, style = [] }: TextProps) => {
 
   return <RNText style={textStyles}>{children}</RNText>;
 };
+
+export const SmallGrayText = styled.Text`
+  color: gray;
+  font-size: 10px;
+`;

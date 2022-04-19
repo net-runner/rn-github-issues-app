@@ -9,6 +9,7 @@ export const CenteringRow = styled.View`
 
 export const Row = styled.View`
   flex-direction: row;
+  align-items: center;
 `;
 export const RowBetween = styled.View`
   flex-direction: row;

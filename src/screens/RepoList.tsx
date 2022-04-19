@@ -19,23 +19,27 @@ const RepoList = () => {
   >('not-found');
 
   const repoList = useMemo(() => (repos ? Object.values(repos) : []), [repos]);
-  const handleRequest = (repo_text: string) => {
-    getRepo(repo_text).then(repo => {
-      if (repos[repo.id]) {
-        setRepoError('same');
-      } else {
-        if (repo.message) {
-          repo.message[0] === 'A' || repo.message[0] === 'B'
-            ? setRepoError('api')
-            : setRepoError('not-found');
+  const handleRequest = useCallback(
+    (repo_text: string) => {
+      console.log(repoList.length);
+      getRepo(repo_text).then(repo => {
+        if (repos[repo.id]) {
+          setRepoError('same');
         } else {
-          setRepoError('found');
+          if (repo.message) {
+            repo.message[0] === 'A' || repo.message[0] === 'B'
+              ? setRepoError('api')
+              : setRepoError('not-found');
+          } else {
+            setRepoError('found');
+          }
         }
-      }
-    });
-  };
+      });
+    },
+    [repoList],
+  );
   const reqRepo = useCallback(
-    debounce(repo_text => handleRequest(repo_text), 1777),
+    debounce(repo_text => handleRequest(repo_text), 1555),
     [],
   );
   const handleChange = (text: string) => {
@@ -49,6 +53,7 @@ const RepoList = () => {
         .then(repo => {
           issuesDispatch({ type: 'repo-add', payload: { repo } });
           setRepoName('');
+          setRepoError('not-found');
         })
         .catch(error => {
           setRepoName(error);

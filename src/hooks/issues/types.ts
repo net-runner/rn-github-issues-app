@@ -17,8 +17,10 @@ export interface Repo {
   message?: string;
   updated_at: string;
   stargazers_count: number;
-  description: string;
   watchers_count: number;
+  forks_count: number;
+  description: string;
+
   open_issues: number;
 }
 export interface IssueComment {
