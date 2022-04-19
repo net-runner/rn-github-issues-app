@@ -73,7 +73,7 @@ const RepoList = () => {
           <TextInput
             style={{
               flex: 1,
-              height: 60,
+              height: 45,
               fontSize: 18,
               paddingHorizontal: 10,
               borderRadius: 10,
@@ -87,15 +87,15 @@ const RepoList = () => {
           />
           <Button
             style={{
-              width: 60,
-              height: 60,
+              width: 45,
+              height: 45,
               marginLeft: 20,
               alignItems: 'center',
               justifyContent: 'center',
             }}
             onPress={() => handleAddRepo()}
           >
-            <AntDesign name="plus" size={24} color="white" />
+            <AntDesign name="plus" size={18} color="white" />
           </Button>
         </RowBetween>
         {RepoName.length > 4 && <RepoFind repoError={repoError} />}

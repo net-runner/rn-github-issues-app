@@ -58,7 +58,9 @@ const IssuesList = ({ navigation, route }: IssueListProps) => {
   }, [currentRepo]);
 
   return (
-    <Page style={{ padding: 0 }}>
+    <View
+      style={{ paddingHorizontal: 10, backgroundColor: '#e8eaed', flex: 1 }}
+    >
       <SearchBar
         placeholder="Search issues..."
         value={Filter}
@@ -86,7 +88,7 @@ const IssuesList = ({ navigation, route }: IssueListProps) => {
           </TouchableOpacity>
         )}
       />
-    </Page>
+    </View>
   );
 };
 
