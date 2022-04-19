@@ -22,7 +22,7 @@ const RepoList = () => {
   const handleRequest = useCallback(
     (repo_text: string) => {
       getRepo(repo_text).then(repo => {
-        if (repos[repo.id]) {
+        if (repoList.some(r => r.id === repo.id)) {
           setRepoError('same');
         } else {
           if (repo.message) {
