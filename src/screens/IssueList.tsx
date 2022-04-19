@@ -1,9 +1,8 @@
-import { TouchableNativeFeedback, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { FlatList } from 'react-native-gesture-handler';
-import { useNavigation, useNavigationState } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { debounce } from 'lodash';
 import { getIssues } from '../api/issues';
 import IssueItem from '../components/Issues/IssueItem';
@@ -13,7 +12,7 @@ import { useIssues } from '../hooks/issues/IssuesProvider';
 import { MainStackParams } from '../navigation/Main';
 import SearchBar from '../components/SearchBar/SearchBar';
 
-type IssueListProps = NativeStackNavigationProp<MainStackParams, 'IssueList'>;
+type IssueListProps = NativeStackScreenProps<MainStackParams, 'IssueList'>;
 
 const IssuesList = ({ navigation, route }: IssueListProps) => {
   const { issues, issuesDispatch, queryPage, currentRepo } = useIssues();
