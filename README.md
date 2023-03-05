@@ -14,7 +14,7 @@ React Native Recruitment Task for [Startup Developement House](https://start-up.
 
 - expo
 - state created using useReducer, useContext persisted using MMKV
-- partialy styled with styled-components
+- partialy styled with emiotion styled components
 - navigated using react-navgation
 
 ## Usage

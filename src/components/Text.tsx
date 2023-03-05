@@ -1,6 +1,6 @@
+import styled from '@emotion/native';
 import React from 'react';
 import { StyleSheet, Text as RNText, StyleProp, TextStyle } from 'react-native';
-import styled from 'styled-components/native';
 
 import colors from '../constants/colors';
 

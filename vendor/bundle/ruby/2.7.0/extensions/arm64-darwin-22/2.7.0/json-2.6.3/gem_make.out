@@ -1,0 +1,13 @@
+current directory: /Volumes/MacDrive/Kod/GithubIssuesApp/vendor/bundle/ruby/2.7.0/gems/json-2.6.3/ext/json
+/Users/janslazynski/.asdf/installs/ruby/2.7.6/bin/ruby -I /Users/janslazynski/.asdf/installs/ruby/2.7.6/lib/ruby/2.7.0 -r ./siteconf20230305-88050-19pq9db.rb extconf.rb
+creating Makefile
+
+current directory: /Volumes/MacDrive/Kod/GithubIssuesApp/vendor/bundle/ruby/2.7.0/gems/json-2.6.3/ext/json
+make "DESTDIR=" clean
+
+current directory: /Volumes/MacDrive/Kod/GithubIssuesApp/vendor/bundle/ruby/2.7.0/gems/json-2.6.3/ext/json
+make "DESTDIR="
+make: Nothing to be done for `all'.
+
+current directory: /Volumes/MacDrive/Kod/GithubIssuesApp/vendor/bundle/ruby/2.7.0/gems/json-2.6.3/ext/json
+make "DESTDIR=" install

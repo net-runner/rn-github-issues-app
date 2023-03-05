@@ -1,5 +1,7 @@
-import { GIT_API_TOKEN } from '@env';
+import Config from 'react-native-config';
 import { Issue } from '../hooks/issues/types';
+import { TOKEN } from './token';
+
 export const getIssues = async (
   page: number = 1,
   ammount: number = 20,
@@ -7,12 +9,6 @@ export const getIssues = async (
 ): Promise<Issue[]> => {
   return fetch(
     `https://api.github.com/repos/${repo}/issues?page=${page}&per_page=${ammount}`,
-    GIT_API_TOKEN
-      ? {
-          headers: {
-            authorization: 'token ' + GIT_API_TOKEN,
-          },
-        }
-      : {},
+    TOKEN,
   ).then(result => result.json());
 };

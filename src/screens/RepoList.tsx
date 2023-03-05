@@ -5,12 +5,13 @@ import { Button } from '../components/Button/Button';
 import { RowBetween } from '../components/Rows';
 import { getRepo } from '../api/repo';
 import { useIssues } from '../hooks/issues/IssuesProvider';
-import Icon from 'react-native-vector-icons/AntDesign';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import { CenterPage } from '../components/CenterPage';
 import RepoFind from '../components/Repos/RepoFind';
 import RepoItemList from '../components/Repos/RepoItemList';
 import { debounce } from 'lodash';
 import { AnimatePresence, MotiView } from 'moti';
+import Config from 'react-native-config';
 
 const RepoList = () => {
   const { repos, issuesDispatch } = useIssues();
@@ -96,7 +97,7 @@ const RepoList = () => {
             }}
             onPress={() => handleAddRepo()}
           >
-            <Icon name="plus" size={18} color="white" />
+            <AntDesign name="plus" size={18} color="white" />
           </Button>
         </RowBetween>
         <AnimatePresence>

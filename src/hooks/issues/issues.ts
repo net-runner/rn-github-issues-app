@@ -1,7 +1,7 @@
+import { nanoid } from 'nanoid';
 import React, { useEffect, useReducer } from 'react';
 import { issueStorage } from '../../store/issue-storage';
 import { Issue, IssueComment, IssuesAction, Repo } from './types';
-import uuid from 'react-native-uuid';
 
 export interface IssuesState {
   issues: {
@@ -92,7 +92,7 @@ const issuesReducer = (
       };
     case 'add-comment':
       let newComment = action.payload.comment as IssueComment;
-      newComment.id = uuid.v4().toString();
+      newComment.id = nanoid();
       newComment.created_at = new Date().toDateString();
       issue = state.issues[action.payload.id];
       issue.comments = issue.comments + 1;

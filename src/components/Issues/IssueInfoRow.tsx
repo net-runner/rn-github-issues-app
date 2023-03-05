@@ -3,7 +3,8 @@ import { Text } from '../Text';
 import React from 'react';
 import IssueStateBadge from './IssueStateBadge';
 import { Issue } from '../../hooks/issues/types';
-import { AntDesign, EvilIcons } from '@expo/vector-icons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import { isTemplateSpan } from 'typescript';
 import { CenteringRow } from '../Rows';
 

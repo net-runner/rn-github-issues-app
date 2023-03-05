@@ -1,7 +1,7 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 import { Issue } from '../../hooks/issues/types';
-import styled from 'styled-components/native';
+import styled from '@emotion/native';
 
 interface BadgeProps {
   state: Issue['state'];
