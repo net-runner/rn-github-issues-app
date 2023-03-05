@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback,
 } from 'react-native';
 import React from 'react';
-import { Feather } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/Feather';
 import { CenteringRow } from '../Rows';
 
 interface SearchBarInterface extends TextInputProps {
@@ -27,7 +27,7 @@ const SearchBar = ({ value, setValue, ...rest }: SearchBarInterface) => {
         borderRadius: 20,
       }}
     >
-      <Feather name="search" size={24} color={'gray'} />
+      <Icon name="search" size={24} color={'gray'} />
       <TextInput
         value={value}
         style={{ color: 'gray', marginLeft: 10, flex: 1 }}
@@ -36,7 +36,7 @@ const SearchBar = ({ value, setValue, ...rest }: SearchBarInterface) => {
       />
       {value !== '' && (
         <TouchableWithoutFeedback onPress={() => setValue('')}>
-          <Feather name="x" size={24} color={'gray'} />
+          <Icon name="x" size={24} color={'gray'} />
         </TouchableWithoutFeedback>
       )}
     </CenteringRow>

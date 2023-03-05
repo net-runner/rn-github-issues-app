@@ -1,5 +1,4 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
 import {
   NavigationContainer,
   DefaultTheme,
@@ -7,10 +6,10 @@ import {
   useNavigationContainerRef,
 } from '@react-navigation/native';
 import { Appearance } from 'react-native';
-import { ThemeProvider } from 'styled-components/native';
 import { Main } from './navigation/Main';
 import './constants/translations';
 import { IssuesProvider } from './hooks/issues/IssuesProvider';
+import { ThemeProvider } from '@emotion/react';
 
 if (__DEV__) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -26,15 +25,12 @@ export default function App() {
 
   const navigationRef = useNavigationContainerRef();
   return (
-    <>
-      <StatusBar style="auto" animated />
-      <IssuesProvider>
-        <NavigationContainer theme={currentTheme} ref={navigationRef}>
-          <ThemeProvider theme={currentTheme}>
-            <Main />
-          </ThemeProvider>
-        </NavigationContainer>
-      </IssuesProvider>
-    </>
+    <IssuesProvider>
+      <NavigationContainer theme={currentTheme} ref={navigationRef}>
+        <ThemeProvider theme={currentTheme}>
+          <Main />
+        </ThemeProvider>
+      </NavigationContainer>
+    </IssuesProvider>
   );
 }

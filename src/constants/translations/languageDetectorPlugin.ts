@@ -1,7 +1,8 @@
 // eslint-disable-file
-import * as Localization from 'expo-localization';
+
 import { LanguageDetectorAsyncModule } from 'i18next';
 import { settingsStorage } from '../../store/settings-storage';
+import { Platform, NativeModules, Dimensions } from 'react-native';
 
 const STORE_LANGUAGE_KEY = 'lang';
 
@@ -15,7 +16,12 @@ const languageDetectorPlugin: LanguageDetectorAsyncModule = {
 
       return callback(l as string);
     }
-    return callback(Localization.locale);
+    const appLanguage =
+      Platform.OS === 'ios'
+        ? NativeModules.SettingsManager.settings.AppleLocale ||
+          NativeModules.SettingsManager.settings.AppleLanguages[0]
+        : NativeModules.I18nManager.localeIdentifier;
+    return callback(appLanguage);
   },
   cacheUserLanguage: (language: string) =>
     settingsStorage.set(STORE_LANGUAGE_KEY, language),

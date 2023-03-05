@@ -21,7 +21,11 @@ export const IssueContext = React.createContext<IssueContextType | undefined>(
   undefined,
 );
 
-export const IssuesProvider: React.FC = ({ children }) => {
+type Props = {
+  children?: React.ReactNode;
+};
+
+export const IssuesProvider = ({ children }: Props) => {
   const [
     { initialized, issues, queryPage, repos, currentRepo },
     issuesDispatch,

@@ -5,7 +5,7 @@ import { Button } from '../components/Button/Button';
 import { RowBetween } from '../components/Rows';
 import { getRepo } from '../api/repo';
 import { useIssues } from '../hooks/issues/IssuesProvider';
-import { AntDesign } from '@expo/vector-icons';
+import Icon from 'react-native-vector-icons/AntDesign';
 import { CenterPage } from '../components/CenterPage';
 import RepoFind from '../components/Repos/RepoFind';
 import RepoItemList from '../components/Repos/RepoItemList';
@@ -96,7 +96,7 @@ const RepoList = () => {
             }}
             onPress={() => handleAddRepo()}
           >
-            <AntDesign name="plus" size={18} color="white" />
+            <Icon name="plus" size={18} color="white" />
           </Button>
         </RowBetween>
         <AnimatePresence>
